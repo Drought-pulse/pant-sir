@@ -34,3 +34,32 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to create person" }, { status: 500 });
   }
 }
+
+// PUT: Update a person by ID
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const body = await request.json();
+    const updated = await People.findByIdAndUpdate(id, body, { new: true });
+    return NextResponse.json(updated, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to update person" }, { status: 500 });
+  }
+}
+
+// DELETE: Delete a person by ID
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    await People.findByIdAndDelete(id);
+    return NextResponse.json({ message: "Deleted successfully" }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error: "Failed to delete person" }, { status: 500 });
+  }
+}
