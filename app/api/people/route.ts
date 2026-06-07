@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnect";
 import People from "@/models/People";
-
+export const dynamic = 'force-dynamic'
 await connectDB();
 
 // GET: Fetch person by ID
