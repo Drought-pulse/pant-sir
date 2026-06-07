@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/dbConnect";
 import People from "@/models/People";
-export const dynamic = 'force-dynamic'
+
+export const dynamic = 'force-dynamic';
+
 await connectDB();
 
-// GET: Fetch person by ID
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -21,7 +22,6 @@ export async function GET(
   }
 }
 
-// POST: Create a new person
 export async function POST(req: Request) {
   try {
     const { name, designation, imageUrl } = await req.json();
@@ -35,7 +35,6 @@ export async function POST(req: Request) {
   }
 }
 
-// PUT: Update a person by ID
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -46,11 +45,10 @@ export async function PUT(
     const updated = await People.findByIdAndUpdate(id, body, { new: true });
     return NextResponse.json(updated, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to update person" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to update" }, { status: 500 });
   }
 }
 
-// DELETE: Delete a person by ID
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -58,8 +56,8 @@ export async function DELETE(
   try {
     const { id } = await params;
     await People.findByIdAndDelete(id);
-    return NextResponse.json({ message: "Deleted successfully" }, { status: 200 });
+    return NextResponse.json({ message: "Deleted" }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: "Failed to delete person" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
   }
 }
